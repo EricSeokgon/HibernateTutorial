@@ -30,14 +30,33 @@ public class MemberTest {
     public void test() {
         System.out.println("삽입 작업");
 
-        Member member = new Member("hadeslee", "hello world");
+        //Insert
+        String hadeslee = "hadeslee";
+        String message = "hello world";
+        Member member = new Member(hadeslee, message);
+        insert(member);
 
+        //Select One
+        Member selectedMember = selectById(1);
+        assertEquals(hadeslee, selectedMember.getMessage());
+
+        assertEquals(1, 1);
+    }
+
+    private Member selectById(int id) {
+        Session session = factory.getCurrentSession();
+        session.beginTransaction();
+        Member selectedMember = (Member) session.get(Member.class, id);
+        session.getTransaction().commit();
+        return selectedMember;
+
+    }
+
+    private void insert(Member member) {
         Session session = factory.getCurrentSession();
         session.beginTransaction();
         session.save(member);
-        session.getTransaction();
-
-        assertEquals(1, 1);
+        session.getTransaction().commit();
     }
 
 }
