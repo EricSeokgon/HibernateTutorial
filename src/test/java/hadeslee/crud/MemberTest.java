@@ -45,12 +45,14 @@ public class MemberTest {
 
         selectedMember.setMessage(message1);
         update(selectedMember);
+        Member updatedMember = selectById(1);
+        assertEquals(message1, updatedMember.getMessage());
 
 
     }
 
     private void update(Member selectedMember) {
-        Session session=factory.getCurrentSession();
+        Session session = factory.getCurrentSession();
         session.beginTransaction();
         session.update(selectedMember);
         session.getTransaction().commit();
