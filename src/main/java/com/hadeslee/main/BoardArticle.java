@@ -24,15 +24,13 @@ public class BoardArticle {
     private String message;
     private Date dateWrite;
 
-    public BoardArticle(String hadeslee, String hello, Date date) {
-
-    }
-
-    public BoardArticle(int id, String userId, String message, Date dateWrite) {
-        this.id = id;
+    public BoardArticle(String userId, String message, Date dateWrite) {
         this.userId = userId;
         this.message = message;
         this.dateWrite = dateWrite;
+    }
+
+    public BoardArticle() {
     }
 
     public int getId() {

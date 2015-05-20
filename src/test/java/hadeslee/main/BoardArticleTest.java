@@ -3,12 +3,14 @@ package hadeslee.main;
 import com.hadeslee.crud.Member;
 import com.hadeslee.main.BoardArticle;
 import com.hadeslee.util.DaoCommon;
+import com.hadeslee.util.HibernateUtil;
+import org.hibernate.SessionFactory;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Date;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * Project: HibernateTutorial
@@ -21,9 +23,10 @@ import static org.junit.Assert.assertEquals;
  */
 
 public class BoardArticleTest {
+    SessionFactory factory = HibernateUtil.getSessionFactory();
     private static final String hadeslee = "hadeslee";
     DaoCommon<BoardArticle> daoBoard = new DaoCommon<BoardArticle>(BoardArticle.class);
-    DaoCommon<Member> daomember = new DaoCommon<Member>(Member.class);
+    DaoCommon<Member> daoMember = new DaoCommon<Member>(Member.class);
 
     @Before
     public void setUp() throws Exception {
