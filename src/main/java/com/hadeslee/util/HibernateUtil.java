@@ -5,6 +5,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.boot.registry.StandardServiceRegistry;
+
 /**
  * Project: HibernateTutorial
  * FileName: HibernateUtil
@@ -13,10 +14,9 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
  * Author: Hadeslee
  * Note:
  * To change this template use File | Settings | File Templates.
- */
-/**
+ *
  * @author Deepak Kumar * Web: http://www.roseindia.net
- *  Update by arahansa@naver.com
+ *         Update by arahansa@naver.com
  */
 public class HibernateUtil {
     private static SessionFactory sessionFactory;
