@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 /**
  * Project: HibernateTutorial
@@ -42,13 +43,25 @@ public class MemberTest {
         assertEquals(message, selectedMember.getMessage());
 
         //Update
-
         selectedMember.setMessage(message1);
         update(selectedMember);
         Member updatedMember = selectById(1);
         assertEquals(message1, updatedMember.getMessage());
 
+        //Delete
+        delete(updatedMember);
+        Member deleteMember = selectById(1);
 
+        assertNull(deleteMember);
+
+
+    }
+
+    private void delete(Member updatedMember) {
+        Session session = factory.getCurrentSession();
+        session.beginTransaction();
+        session.delete(updatedMember);
+        session.getTransaction().commit();
     }
 
     private void update(Member selectedMember) {
