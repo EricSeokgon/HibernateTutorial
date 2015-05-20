@@ -28,19 +28,32 @@ public class MemberTest {
 
     @Test
     public void test() {
-        System.out.println("삽입 작업");
 
         //Insert
         String hadeslee = "hadeslee";
         String message = "hello world";
+        String message1 = "Hello hibernate4";
+
         Member member = new Member(hadeslee, message);
         insert(member);
 
         //Select One
         Member selectedMember = selectById(1);
-        assertEquals(hadeslee, selectedMember.getMessage());
+        assertEquals(message, selectedMember.getMessage());
 
-        assertEquals(1, 1);
+        //Update
+
+        selectedMember.setMessage(message1);
+        update(selectedMember);
+
+
+    }
+
+    private void update(Member selectedMember) {
+        Session session=factory.getCurrentSession();
+        session.beginTransaction();
+        session.update(selectedMember);
+        session.getTransaction().commit();
     }
 
     private Member selectById(int id) {
