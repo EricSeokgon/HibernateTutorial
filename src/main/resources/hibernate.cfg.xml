@@ -42,6 +42,7 @@
         <property name="current_session_context_class">thread</property>
 
         <mapping class="com.hadeslee.crud.Member"/>
+        <mapping class="com.hadeslee.main.BoardArticle"/>
     </session-factory>
 
 </hibernate-configuration>
