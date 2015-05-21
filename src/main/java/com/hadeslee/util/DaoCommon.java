@@ -1,12 +1,11 @@
 package com.hadeslee.util;
 
-import java.util.List;
-
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Projections;
+
+import java.util.List;
 
 /**
  * Project: HibernateTutorial
@@ -23,7 +22,7 @@ public class DaoCommon<T> {
     private SessionFactory factory;
     private Class clazz;
     private String boardName;
-
+    private static int numPerPage = 10;
 
 
     public DaoCommon(Class<?> clazz) {
@@ -33,11 +32,23 @@ public class DaoCommon<T> {
     }
 
 
+    public List<?> getPagingList(int requestPage) {
+        Session session = factory.getCurrentSession();
+        Transaction tx = session.beginTransaction();
+        Query query = (Query) session.createQuery("from " + boardName + " order by id asc");
+
+        query.setFirstResult((requestPage - 1) * numPerPage);
+        query.setMaxResults(numPerPage);
+
+        List<?> members = query.list();
+        tx.commit();
+        return members;
+    }
 
     public List<?> selectList() {
         Session session = factory.getCurrentSession();
         session.beginTransaction();
-        Query query = session.createQuery("from "+boardName);
+        Query query = session.createQuery("from " + boardName);
 
         List<?> list = query.list();
         session.getTransaction().commit();

@@ -24,17 +24,24 @@ public class BoardArticle {
     private String message;
     private Date dateWrite;
 
+
+    public BoardArticle(int id, String userId, String contents, Date dateWrite) {
+    }
+
     public BoardArticle(String userId, String message, Date dateWrite) {
         this.userId = userId;
         this.message = message;
         this.dateWrite = dateWrite;
     }
 
-    public BoardArticle() {
-    }
-
-    public BoardArticle(int id, String userId, String contents, Date dateWrite) {
-
+    @Override
+    public String toString() {
+        return "BoardArticle{" +
+                "id=" + id +
+                ", userId='" + userId + '\'' +
+                ", message='" + message + '\'' +
+                ", dateWrite=" + dateWrite +
+                '}';
     }
 
     public int getId() {
