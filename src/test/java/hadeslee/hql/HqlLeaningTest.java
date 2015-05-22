@@ -1,7 +1,15 @@
 package hadeslee.hql;
 
+import com.hadeslee.util.DaoCommon;
+import com.hadeslee.util.HibernateTestUtil;
+import com.hadeslee.util.UserDetail;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.List;
 
 /**
  * Project: HibernateTutorial
