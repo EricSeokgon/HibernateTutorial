@@ -1,8 +1,12 @@
 package com.hadeslee.util;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+
+import java.util.List;
+
 /**
  * Project: HibernateTutorial
  * FileName: DaoCommon
@@ -12,42 +16,72 @@ import javax.persistence.Id;
  * Note:
  * To change this template use File | Settings | File Templates.
  */
-@Entity
-public class UserDetail {
+public class DaoCommon<T> {
 
 
-    @Id
-    @GeneratedValue
-    private int id;
+    private SessionFactory factory;
+    private Class clazz;
+    private String boardName;
+    private static int numPerPage = 10;
 
-    private String userName;
 
-    public UserDetail() {
+    public DaoCommon(Class<?> clazz) {
+        factory = HibernateTestUtil.getSessionFactory(clazz);
+        this.clazz = clazz;
+        this.boardName = clazz.getSimpleName();
     }
 
-    public UserDetail(String userName) {
-        super();
-        this.userName = userName;
+
+    public List<?> getPagingList(int requestPage) {
+        Session session = factory.getCurrentSession();
+        Transaction tx = session.beginTransaction();
+        Query query = (Query) session.createQuery("from " + boardName + " order by id asc");
+
+        query.setFirstResult((requestPage - 1) * numPerPage);
+        query.setMaxResults(numPerPage);
+
+        List<?> members = query.list();
+        tx.commit();
+        return members;
     }
 
-    public int getId() {
-        return id;
+    public List<?> selectList() {
+        Session session = factory.getCurrentSession();
+        session.beginTransaction();
+        Query query = session.createQuery("from " + boardName);
+
+        List<?> list = query.list();
+        session.getTransaction().commit();
+        return list;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void delete(T member) {
+        Session session = factory.getCurrentSession();
+        session.beginTransaction();
+        session.delete(member);
+        session.getTransaction().commit();
     }
 
-    public String getUserName() {
-        return userName;
+    public void update(T selectedMember) {
+        Session session = factory.getCurrentSession();
+        session.beginTransaction();
+        session.update(selectedMember);
+        session.getTransaction().commit();
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public T selectById(int id) {
+        Session session = factory.getCurrentSession();
+        session.beginTransaction();
+        T member = (T) session.get(clazz, id);
+        session.getTransaction().commit();
+        return member;
     }
 
-    @Override
-    public String toString() {
-        return "UserDetail [id=" + id + ", userName=" + userName + "]";
+    public void insert(T member) {
+        Session session = factory.getCurrentSession();
+        session.beginTransaction();
+        session.save(member);
+        session.getTransaction().commit();
     }
+
 }
