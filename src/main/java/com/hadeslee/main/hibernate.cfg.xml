@@ -41,6 +41,7 @@
         <property name="connection.pool_size">1</property>
         <property name="current_session_context_class">thread</property>
 
+        <mapping class="com.hadeslee.crud.Member"/>
         <mapping class="com.hadeslee.main.BoardArticle"/>
         <mapping class="com.hadeslee.main.Comments"/>
     </session-factory>

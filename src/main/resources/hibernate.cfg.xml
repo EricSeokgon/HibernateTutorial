@@ -43,6 +43,7 @@
 
         <mapping class="com.hadeslee.crud.Member"/>
         <mapping class="com.hadeslee.main.BoardArticle"/>
+        <mapping class="com.hadeslee.main.Comments"/>
     </session-factory>
 
 </hibernate-configuration>

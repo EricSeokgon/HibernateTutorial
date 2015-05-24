@@ -64,4 +64,14 @@ public class BoardArticle {
     public void setDateWrite(Date dateWrite) {
         this.dateWrite = dateWrite;
     }
+
+    @Override
+    public String toString() {
+        return "BoardArticle{" +
+                "id=" + id +
+                ", userId='" + userId + '\'' +
+                ", message='" + message + '\'' +
+                ", dateWrite=" + dateWrite +
+                '}';
+    }
 }
