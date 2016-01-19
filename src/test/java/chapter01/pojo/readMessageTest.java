@@ -1,11 +1,9 @@
 package chapter01.pojo;
 
+import org.junit.Assert;
 import org.junit.Test;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,17 +24,66 @@ public class readMessageTest {
     ResultSet rs = null;
 
     List<Message> list = new ArrayList<>();
-    try
+    try {
+        try {
+            connection = DriverManager.getConnection("jdbc:hsqldb:db1;shutdown=true");
+            ps = connection.prepareStatement("SELECT id, text FROM messages ");
+            rs = ps.executeQuery();
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+        }
+        try {
+            while (rs.next()) {
+                Message message = new Message();
+                message.setId((int) rs.getLong(1));
+                message.setText(rs.getString(2));
+                list.add(message);
+            }
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+        }
+        if (list.size() > 1) {
+            Assert.fail("Message configuration in error; table should contain only one."
+                    + " Set ddl to drop-create.");
+        }
+        if (list.size() == 0) {
+            Assert.fail("Read of initial message failed; check saveMessage() for errors."
+                    + " How did this test run?");
+        }
+        for (Message m : list) {
+            System.out.println(m);
+        }
+// eagerly free resources
+        try {
+            rs.close();
+            ps.close();
+            connection.close();
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+        }
 
-    {
-        connection = DriverManager.getConnection("jdbc:hsqldb:db1;shutdown=true");
-        ps = connection.prepareStatement("SELECT id, text FROM messages ");
-
-        rs = ps.executeQuery();
-        while (rs.next()) {
-            Message message = new Message();
-            message.setId(rs.getLong(1));
+    }
+    catch( SQLException e )  {
+        e.printStackTrace();
+        throw new RuntimeException(e);
+    } finally {
+        try {
+            if (rs != null && !rs.isClosed()) {
+                rs.close();
+            }
+        } catch (SQLException ignored) {
+        }
+        try {
+            if (ps != null && !ps.isClosed()) {
+                ps.close();
+            }
+        } catch (SQLException ignored) {
+        }
+        try {
+            if (connection != null && !connection.isClosed()) {
+                connection.close();
+            }
+        } catch (SQLException ignored) {
         }
     }
-
 }
