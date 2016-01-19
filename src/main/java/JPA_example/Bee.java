@@ -1,5 +1,6 @@
 package JPA_example;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.text.MessageFormat;
 
@@ -12,9 +13,16 @@ import java.text.MessageFormat;
  * Note:
  * To change this template use File | Settings | File Templates.
  */
+@Entity
 public class Bee implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bee_gen")
+    @SequenceGenerator(name= "bee_gen",sequenceName = "bee_id_seq")
     private Integer id;
     private String name;
+
+    @ManyToOne
+    @JoinColumn
     private Honey honey;
 
     public Bee() {
