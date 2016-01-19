@@ -2,6 +2,8 @@ package JPA_example;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Set;
+
 
 /**
  * Project: HibernateTutorial
@@ -16,7 +18,7 @@ public class Honey implements Serializable {
     private Integer id;
     private String name;
     private String taste;
-    private set<Bee> bees = new HashSet<Bee>();
+    private Set<Bee> bees = new HashSet<Bee>();
 
     public Honey() {
     }
@@ -50,11 +52,11 @@ public class Honey implements Serializable {
         this.taste = taste;
     }
 
-    public set<Bee> getBees() {
+    public Set<Bee> getBees() {
         return bees;
     }
 
-    public void setBees(set<Bee> bees) {
+    public void setBees(Set<Bee> bees) {
         this.bees = bees;
     }
 
