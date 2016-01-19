@@ -1,5 +1,6 @@
 package JPA_example;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -14,10 +15,15 @@ import java.util.Set;
  * Note:
  * To change this template use File | Settings | File Templates.
  */
+@Entity
+@SequenceGenerator(name = "honey_seq", sequenceName = "honey_id_seq")
 public class Honey implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "honey_seq")
     private Integer id;
     private String name;
     private String taste;
+    @OneToMany(mappedBy = "honey")
     private Set<Bee> bees = new HashSet<Bee>();
 
     public Honey() {
