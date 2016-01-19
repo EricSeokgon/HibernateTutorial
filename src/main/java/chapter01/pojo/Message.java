@@ -11,6 +11,7 @@ package chapter01.pojo;
  */
 public class Message {
     String text;
+    Integer id;
 
     public Message() {
     }
@@ -25,5 +26,13 @@ public class Message {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }
